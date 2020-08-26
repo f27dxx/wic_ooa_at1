@@ -16,4 +16,7 @@
     <ProjectReference Include="..\Shared\wan_at1_oop.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Employees\" />
+  </ItemGroup>
 </Project>

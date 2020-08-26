@@ -1,0 +1,74 @@
+﻿@page "/employees"
+@inject HttpClient http
+<h3>Index</h3>
+
+@if (employees == null)
+{
+    <text>Loading...</text>
+}
+else if (employees.Length == 0)
+{
+    <text>There are no records in the database</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Rate</th>
+                <th scope="col">Registration No.</th>
+                <th scope="col">Expiry Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in employees)
+            {
+                <tr>
+                    <th scope="row">@employee.EmployeeId</th>
+                    <td>@employee.EmployeeName</td>
+                    <td>@employee.RatePerHour /hr</td>
+                    <td>@employee.Registration</td>
+                    <td>@employee.ExpiryDate</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+@code {
+    Technician[] employees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllEmployees();
+    }
+
+    async Task GetAllEmployees()
+    {
+        employees = await http.GetFromJsonAsync<Technician[]>("api/employees");
+        employees = new Technician[]
+        {
+            new Technician(){
+                EmployeeId = 1,
+                EmployeeName = "Jack",
+                RatePerHour = 12.66,
+                BranchId = 1,
+                PositionId = 1,
+                Registration = "ACS31115",
+                ExpiryDate = "27/04/1993"
+            },
+            new Technician(){
+                EmployeeId = 2,
+                EmployeeName = "Ting",
+                RatePerHour = 99.33,
+                BranchId = 2,
+                PositionId = 2,
+                Registration = "99900",
+                ExpiryDate = "07/04/1993"
+            }
+        };
+    }
+}
