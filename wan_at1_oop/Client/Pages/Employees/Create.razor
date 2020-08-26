@@ -1,0 +1,90 @@
+﻿@page "/employees/create"
+@inject HttpClient http
+@inject NavigationManager navMan
+
+<h3>Create</h3>
+
+<EditForm Model="@employee" OnValidSubmit="@CreateEmployee">
+    <DataAnnotationsValidator />
+    <div>
+
+        <div class="form-row">
+            <div class="col-8">
+                <label>
+                    Name:
+                    <InputText @bind-Value="@employee.EmployeeName"
+                        class="form-control"
+                        placeholder="e.g. John"
+                    />
+                </label>
+            </div>
+            <div class="col-4">
+                <label>
+                    Branch: 
+                    <InputSelect
+                        @bind-Value="@employee.BranchId"
+                        class="form-control"
+                    >
+                        <option value="1">NSW</option>
+                        <option value="2">VIC</option>
+                    </InputSelect>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-4">
+                <label>
+                    Rate Per Hour
+                    <InputNumber
+                        @bind-Value="@employee.RatePerHour"
+                        class="form-control"
+                        placeholder="e.g. 12.99"
+                    />
+                </label>
+            </div>
+            <div class="col-8">
+                <label>
+                    Position:
+                    <InputSelect @bind-Value="@employee.PositionId">
+                        <option value="1">Technician</option>
+                        <option value="2">Accountant</option>
+                    </InputSelect>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-8">
+                <label>
+                    Reg. No
+                    <InputText @bind-Value="@employee.Registration"
+                               class="form-control"
+                               placeholder="e.g. 000001" />
+                </label>
+            </div>
+            <div class="col-4">
+                <label>
+                    Expiry Date:
+                    <InputText @bind-Value="@employee.ExpiryDate"
+                               class="form-control"
+                               placeholder="dd/mm/yyyy" />
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">
+            Submit
+        </button>
+    </div>
+
+</EditForm>
+
+
+@code {
+    Technician employee = new Technician();
+    async Task CreateEmployee()
+    {
+        await http.PostAsJsonAsync("api/employees", employee);
+        navMan.NavigateTo("employees");
+    }
+}

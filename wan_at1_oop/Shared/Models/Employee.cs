@@ -8,11 +8,15 @@ namespace wan_at1_oop.Shared.Models
     {
         [Key]
         public int EmployeeId { get; set; }
+        [Required]
         public string EmployeeName { get; set; }
+        [Required]
         public double RatePerHour { get; set; }
         [ForeignKey("PositionId")]
+        [Required]
         public int PositionId { get; set; }
         [ForeignKey("BranchId")]
+        [Required]
         public int BranchId { get; set; }
 
 

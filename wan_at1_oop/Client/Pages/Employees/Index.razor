@@ -20,6 +20,8 @@ else
                 <th scope="col">Rate</th>
                 <th scope="col">Registration No.</th>
                 <th scope="col">Expiry Date</th>
+                <th scope="col">Action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -31,6 +33,12 @@ else
                     <td>@employee.RatePerHour /hr</td>
                     <td>@employee.Registration</td>
                     <td>@employee.ExpiryDate</td>
+                    <td>
+                        <a class="btn btn-warning">Edit</a>
+                        <a class="btn btn-danger">Delete</a>
+
+                    </td>
+
                 </tr>
             }
 
@@ -49,7 +57,7 @@ else
     async Task GetAllEmployees()
     {
         employees = await http.GetFromJsonAsync<Technician[]>("api/employees");
-        employees = new Technician[]
+        @*employees = new Technician[]
         {
             new Technician(){
                 EmployeeId = 1,
@@ -69,6 +77,6 @@ else
                 Registration = "99900",
                 ExpiryDate = "07/04/1993"
             }
-        };
+        };*@
     }
 }
