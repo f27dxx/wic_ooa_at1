@@ -21,13 +21,13 @@
             <div class="col-4">
                 <label>
                     Branch: 
-                    <InputSelect
+                    <CustomInputSelect
                         @bind-Value="@employee.BranchId"
                         class="form-control"
                     >
                         <option value="1">NSW</option>
                         <option value="2">VIC</option>
-                    </InputSelect>
+                    </CustomInputSelect>
                 </label>
             </div>
         </div>
@@ -46,10 +46,10 @@
             <div class="col-8">
                 <label>
                     Position:
-                    <InputSelect @bind-Value="@employee.PositionId">
+                    <CustomInputSelect @bind-Value="@employee.PositionId">
                         <option value="1">Technician</option>
                         <option value="2">Accountant</option>
-                    </InputSelect>
+                    </CustomInputSelect>
                 </label>
             </div>
         </div>
@@ -85,6 +85,8 @@
     async Task CreateEmployee()
     {
         await http.PostAsJsonAsync("api/employees", employee);
-        navMan.NavigateTo("employees");
+        @*navMan.NavigateTo("employees");*@
     }
+
+
 }
