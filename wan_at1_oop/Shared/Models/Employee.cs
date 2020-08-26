@@ -6,6 +6,7 @@ namespace wan_at1_oop.Shared.Models
 {
     public class Employee
     {
+        [Key]
         public int EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public double RatePerHour { get; set; }

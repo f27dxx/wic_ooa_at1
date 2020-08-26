@@ -12,7 +12,7 @@ namespace wan_at1_oop.Server
 
         }
 
-        public DbSet<Accountant> Employees { get; set; }
+        public DbSet<Technician> Employees { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Position> Positions { get; set; }
     }
