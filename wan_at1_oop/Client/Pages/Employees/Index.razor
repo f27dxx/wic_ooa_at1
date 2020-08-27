@@ -2,76 +2,79 @@
 @inject HttpClient http
 
 
-<h3>Index</h3>
-<div class="container">
-    <div class="row">
-        <div class="col-4">
-            <EmployeeForm ButtonText="Create Employee"
-                          Employee="@employeeToCreate"
-                          OnValidSubmit="@CreateEmployee"
-                          Title="Create" />
-        </div>
-        <div class="col-8" style="border-left: 1px solid grey;">
-            @if (employees == null)
-            {
-                <text>Loading...</text>
-            }
-            else if (employees.Length == 0)
-            {
-                <text>There are no records in the database</text>
-            }
-            else
-            {
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Rate /hr</th>
-                            <th scope="col">Registration</th>
-                            <th scope="col">Expiry Date</th>
-                            <th scope="col">Action</th>
+    <div class="container">
+        <h3>Index</h3>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var employee in employees)
-                        {
+        <div class="row">
+            <div class="col-4">
+                <EmployeeForm ButtonText="@buttonText"
+                              Employee="@employee"
+                              OnValidSubmit="@ChooseSubmitActionAndSubmit"
+                              Title="@title" />
+            </div>
+            <div class="col-8" style="border-left: 1px solid grey;">
+                @if (employees == null)
+                {
+                    <text>Loading...</text>
+                }
+                else if (employees.Length == 0)
+                {
+                    <text>There are no records in the database</text>
+                }
+                else
+                {
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <th scope="row">@employee.EmployeeId</th>
-                                <td>@employee.EmployeeName</td>
-                                <td>@employee.RatePerHour</td>
-                                <td>@employee.Registration</td>
-                                <td>@employee.ExpiryDate</td>
-                                <td>
-                                    <a href="employees/edit/@employee.EmployeeId" class="mr-2">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="blue" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                        </svg>
-                                    </a>
-                                    <a @onclick="@(() => DeleteEmployee(employee.EmployeeId))">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="red" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                        </svg>
-                                    </a>
-                                </td>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Rate /hr</th>
+                                <th scope="col">Registration</th>
+                                <th scope="col">Expiry Date</th>
+                                <th scope="col">Action</th>
 
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @foreach (var employee in employees)
+                            {
+                                <tr>
+                                    <th scope="row">@employee.EmployeeId</th>
+                                    <td>@employee.EmployeeName</td>
+                                    <td>@employee.RatePerHour</td>
+                                    <td>@employee.Registration</td>
+                                    <td>@employee.ExpiryDate</td>
+                                    <td>
+                                        <a @onclick="@(() => GetEmployeeDetails(employee.EmployeeId))" class="mr-2">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="blue" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                            </svg>
+                                        </a>
+                                        <a @onclick="@(() => DeleteEmployee(employee.EmployeeId))">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg>
+                                        </a>
+                                    </td>
 
-                    </tbody>
-                </table>
-            }
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+            </div>
         </div>
     </div>
-</div>
 
 
 
 @code {
     // table part
+    Technician employee = new Technician();
+
     Technician[] employees { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -89,12 +92,45 @@
         await http.DeleteAsync($"api/employees/{employeeId}");
         await GetAllEmployees();
     }
+    //form configuration
+    string title = "Create";
+    string buttonText = "Create!";
+    string action = "create";
+    int employeeIdOfUpdateTarget;
+
+    //function determine submit action
+    async Task ChooseSubmitActionAndSubmit()
+    {
+        if(action == "create")
+        {
+            await CreateEmployee();
+        }
+        if(action == "edit")
+        {
+            await UpdateEmployee();
+        }
+    }
+
+    //edit form part
+
+    async Task GetEmployeeDetails(int employeeId)
+    {
+        employee = await http.GetFromJsonAsync<Technician>($"api/employees/{employeeId}");
+        action = "edit";
+        title = "Edit";
+        buttonText = "Edit " + employee.EmployeeName;
+    }
+
+    async Task UpdateEmployee()
+    {
+        await http.PutAsJsonAsync("api/employees", employee);
+        await GetAllEmployees();
+    }
 
     //create form part
-    Technician employeeToCreate = new Technician();
     async Task CreateEmployee()
     {
-        await http.PostAsJsonAsync("api/employees", employeeToCreate);
+        await http.PostAsJsonAsync("api/employees", employee);
         await GetAllEmployees();
     }
 }
