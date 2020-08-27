@@ -42,8 +42,8 @@
                     Position:
                     <br />
                     <CustomInputSelect @bind-Value="@Employee.PositionId">
-                        <option value="1">Technician</option>
-                        <option value="2">Accountant</option>
+                        <option value="1" @onclick="@changeDefaultValue">Technician</option>
+                        <option value="2" @onclick="@changeDefaultValue">Accountant</option>
                     </CustomInputSelect>
                 </label>
             </div>
@@ -63,7 +63,8 @@
                     Expiry Date:
                     <InputText @bind-Value="@Employee.ExpiryDate"
                                class="form-control"
-                               placeholder="dd/mm/yyyy" />
+                               placeholder="dd/mm/yyyy"
+                               />
                 </label>
             </div>
         </div>
@@ -76,7 +77,31 @@
 
 @code {
     [Parameter] public Technician Employee { get; set; }
-    [Parameter] public string ButtonText { get; set; } = "Submit";
-    [Parameter] public string Title { get; set; } = "Create";
+    [Parameter] public string ButtonText { get; set; }
+    [Parameter] public string Title { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    public void changeDefaultValue()
+    {
+
+        if(Employee.PositionId == 2)
+        {
+            Employee.ExpiryDate = "N/A";
+            if(String.IsNullOrEmpty(Employee.Registration) || !Employee.Registration.StartsWith("AC"))
+            {
+                Employee.Registration = "AC";
+            }
+        } else if(Employee.PositionId == 1)
+        {
+            if(Employee.ExpiryDate == "N/A")
+            {
+                Employee.ExpiryDate = "";
+            }
+
+            if (!String.IsNullOrEmpty(Employee.Registration) && Employee.Registration.StartsWith("AC"))
+            {
+                Employee.Registration = "";
+            }
+        }
+    }
 }

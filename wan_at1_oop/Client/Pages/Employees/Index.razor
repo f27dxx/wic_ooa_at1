@@ -10,7 +10,8 @@
                 <EmployeeForm ButtonText="@buttonText"
                               Employee="@employee"
                               OnValidSubmit="@ChooseSubmitActionAndSubmit"
-                              Title="@title" />
+                              Title="@title"
+                              />
             </div>
             <div class="col-8" style="border-left: 1px solid grey;">
                 @if (employees == null)
@@ -96,7 +97,6 @@
     string title = "Create";
     string buttonText = "Create!";
     string action = "create";
-    int employeeIdOfUpdateTarget;
 
     //function determine submit action
     async Task ChooseSubmitActionAndSubmit()
@@ -132,5 +132,6 @@
     {
         await http.PostAsJsonAsync("api/employees", employee);
         await GetAllEmployees();
+        employee = new Technician();
     }
 }
