@@ -3,17 +3,20 @@
 <EditForm Model="@Employee" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <div>
-
+        <div class="form-row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>
+                        Name:
+                        <InputText @bind-Value="@Employee.EmployeeName"
+                                   class="form-control"
+                                   placeholder="e.g. John" />
+                    </label>
+                </div>
+            </div>
+        </div>
         <div class="form-row">
             <div class="col-8">
-                <label>
-                    Name:
-                    <InputText @bind-Value="@Employee.EmployeeName"
-                               class="form-control"
-                               placeholder="e.g. John" />
-                </label>
-            </div>
-            <div class="col-4">
                 <label>
                     Branch:
                     <CustomInputSelect @bind-Value="@Employee.BranchId"
@@ -23,20 +26,21 @@
                     </CustomInputSelect>
                 </label>
             </div>
-        </div>
-
-        <div class="form-row">
             <div class="col-4">
                 <label>
-                    Rate Per Hour
+                    Rate /hr
                     <InputNumber @bind-Value="@Employee.RatePerHour"
                                  class="form-control"
                                  placeholder="e.g. 12.99" />
                 </label>
             </div>
+        </div>
+
+        <div class="form-row">
             <div class="col-8">
                 <label>
                     Position:
+                    <br />
                     <CustomInputSelect @bind-Value="@Employee.PositionId">
                         <option value="1">Technician</option>
                         <option value="2">Accountant</option>
@@ -46,7 +50,7 @@
         </div>
 
         <div class="form-row">
-            <div class="col-8">
+            <div class="col-7">
                 <label>
                     Reg. No
                     <InputText @bind-Value="@Employee.Registration"
@@ -54,7 +58,7 @@
                                placeholder="e.g. 000001" />
                 </label>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <label>
                     Expiry Date:
                     <InputText @bind-Value="@Employee.ExpiryDate"
@@ -63,7 +67,7 @@
                 </label>
             </div>
         </div>
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success mt-2 d-block" style="width: 100%;">
             @ButtonText
         </button>
     </div>

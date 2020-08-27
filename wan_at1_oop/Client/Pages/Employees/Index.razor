@@ -1,12 +1,17 @@
 ﻿@page "/employees"
 @inject HttpClient http
+
+
 <h3>Index</h3>
 <div class="container">
     <div class="row">
         <div class="col-4">
-            <p> something</p>
+            <EmployeeForm ButtonText="Create Employee"
+                          Employee="@employeeToCreate"
+                          OnValidSubmit="@CreateEmployee"
+                          Title="Create" />
         </div>
-        <div class="col-8">
+        <div class="col-8" style="border-left: 1px solid grey;">
             @if (employees == null)
             {
                 <text>Loading...</text>
@@ -66,6 +71,7 @@
 
 
 @code {
+    // table part
     Technician[] employees { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -76,32 +82,19 @@
     async Task GetAllEmployees()
     {
         employees = await http.GetFromJsonAsync<Technician[]>("api/employees");
-        @*employees = new Technician[]
-            {
-                new Technician(){
-                    EmployeeId = 1,
-                    EmployeeName = "Jack",
-                    RatePerHour = 12.66,
-                    BranchId = 1,
-                    PositionId = 1,
-                    Registration = "ACS31115",
-                    ExpiryDate = "27/04/1993"
-                },
-                new Technician(){
-                    EmployeeId = 2,
-                    EmployeeName = "Ting",
-                    RatePerHour = 99.33,
-                    BranchId = 2,
-                    PositionId = 2,
-                    Registration = "99900",
-                    ExpiryDate = "07/04/1993"
-                }
-            };*@
     }
 
     async Task DeleteEmployee(int employeeId)
     {
         await http.DeleteAsync($"api/employees/{employeeId}");
+        await GetAllEmployees();
+    }
+
+    //create form part
+    Technician employeeToCreate = new Technician();
+    async Task CreateEmployee()
+    {
+        await http.PostAsJsonAsync("api/employees", employeeToCreate);
         await GetAllEmployees();
     }
 }
