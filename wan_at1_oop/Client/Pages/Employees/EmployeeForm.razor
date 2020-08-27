@@ -1,4 +1,5 @@
-﻿<h3>@Title</h3>
+﻿@inject HttpClient http 
+<h5 style="padding-left:40%;" class="mt-2">@Title</h5>
 
 <EditForm Model="@Employee" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
@@ -21,8 +22,20 @@
                     Branch:
                     <CustomInputSelect @bind-Value="@Employee.BranchId"
                                        class="form-control">
-                        <option value="1">NSW</option>
-                        <option value="2">VIC</option>
+                        @if (branches == null)
+                        {
+                            <text>Loading...</text>
+                        }
+                        else
+                        {
+                            @foreach (var branch in branches)
+                            {
+                                <option value="@branch.BranchId">@branch.Location</option>
+                            }
+                        }
+
+                        @*<option value="1">NSW</option>
+                        <option value="2">VIC</option>*@
                     </CustomInputSelect>
                 </label>
             </div>
@@ -42,8 +55,20 @@
                     Position:
                     <br />
                     <CustomInputSelect @bind-Value="@Employee.PositionId">
-                        <option value="1" @onclick="@changeDefaultValue">Technician</option>
-                        <option value="2" @onclick="@changeDefaultValue">Accountant</option>
+                        @if (branches == null)
+                        {
+                            <text>Loading...</text>
+                        }
+                        else
+                        {
+                            @foreach (var position in positions)
+                            {
+                                <option value="@position.PositionId" @onclick="@changeDefaultValue">@position.PositionType</option>
+                            }
+                        }
+
+                        @*<option value="1" @onclick="@changeDefaultValue">Technician</option>
+                        <option value="2" @onclick="@changeDefaultValue">Accountant</option>*@
                     </CustomInputSelect>
                 </label>
             </div>
@@ -80,6 +105,26 @@
     [Parameter] public string ButtonText { get; set; }
     [Parameter] public string Title { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    Position[] positions { get; set; }
+    Branch[] branches { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllPositions();
+        await GetAllBranches();
+    }
+
+    async Task GetAllPositions()
+    {
+        positions = await http.GetFromJsonAsync<Position[]>("api/positions");
+    }
+
+    async Task GetAllBranches()
+    {
+        branches = await http.GetFromJsonAsync<Branch[]>("api/branches");
+    }
 
     public void changeDefaultValue()
     {

@@ -3,7 +3,7 @@
 
 
     <div class="container">
-        <h3>Index</h3>
+        <button type="button"class="btn btn-outline-primary mb-2" style="width:100%;" @onclick="@setToCreateForm"> Create + </button>
 
         <div class="row">
             <div class="col-4">
@@ -125,6 +125,7 @@
     {
         await http.PutAsJsonAsync("api/employees", employee);
         await GetAllEmployees();
+        buttonText = "Edit " + employee.EmployeeName;
     }
 
     //create form part
@@ -133,5 +134,17 @@
         await http.PostAsJsonAsync("api/employees", employee);
         await GetAllEmployees();
         employee = new Technician();
+        employee.BranchId = 1;
+        employee.PositionId = 1;
+    }
+
+    public void setToCreateForm()
+    {
+        title = "Create";
+        buttonText = "Create!";
+        action = "create";
+        employee = new Technician();
+        employee.BranchId = 1;
+        employee.PositionId = 1;
     }
 }
