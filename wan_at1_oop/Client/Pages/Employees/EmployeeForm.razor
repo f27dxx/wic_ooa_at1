@@ -1,0 +1,78 @@
+﻿<h3>@Title</h3>
+
+<EditForm Model="@Employee" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div>
+
+        <div class="form-row">
+            <div class="col-8">
+                <label>
+                    Name:
+                    <InputText @bind-Value="@Employee.EmployeeName"
+                               class="form-control"
+                               placeholder="e.g. John" />
+                </label>
+            </div>
+            <div class="col-4">
+                <label>
+                    Branch:
+                    <CustomInputSelect @bind-Value="@Employee.BranchId"
+                                       class="form-control">
+                        <option value="1">NSW</option>
+                        <option value="2">VIC</option>
+                    </CustomInputSelect>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-4">
+                <label>
+                    Rate Per Hour
+                    <InputNumber @bind-Value="@Employee.RatePerHour"
+                                 class="form-control"
+                                 placeholder="e.g. 12.99" />
+                </label>
+            </div>
+            <div class="col-8">
+                <label>
+                    Position:
+                    <CustomInputSelect @bind-Value="@Employee.PositionId">
+                        <option value="1">Technician</option>
+                        <option value="2">Accountant</option>
+                    </CustomInputSelect>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-8">
+                <label>
+                    Reg. No
+                    <InputText @bind-Value="@Employee.Registration"
+                               class="form-control"
+                               placeholder="e.g. 000001" />
+                </label>
+            </div>
+            <div class="col-4">
+                <label>
+                    Expiry Date:
+                    <InputText @bind-Value="@Employee.ExpiryDate"
+                               class="form-control"
+                               placeholder="dd/mm/yyyy" />
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">
+            @ButtonText
+        </button>
+    </div>
+
+</EditForm>
+
+@code {
+    [Parameter] public Technician Employee { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Submit";
+    [Parameter] public string Title { get; set; } = "Create";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}
