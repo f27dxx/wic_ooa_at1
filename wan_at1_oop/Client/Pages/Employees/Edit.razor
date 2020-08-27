@@ -1,0 +1,24 @@
+﻿@page "/employees/edit/{employeeId:int}"
+@inject HttpClient http 
+@inject NavigationManager navMan
+
+<EmployeeForm
+              ButtonText="Edit"
+              Employee="@employee"
+              OnValidSubmit="@UpdateEmployee"
+              Title="Edit" />
+
+@code {
+    [Parameter] public int employeeId { get; set; }
+    Technician employee = new Technician();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        employee = await http.GetFromJsonAsync<Technician>($"api/employees/{employeeId}");
+    }
+    async Task UpdateEmployee()
+    {
+        await http.PutAsJsonAsync("api/employees", employee);
+        navMan.NavigateTo("employees");
+    }
+}
