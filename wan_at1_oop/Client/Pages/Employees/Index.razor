@@ -35,7 +35,7 @@ else
                     <td>@employee.ExpiryDate</td>
                     <td>
                         <a class="btn btn-warning" href="employees/edit/@employee.EmployeeId">Edit</a>
-                        <a class="btn btn-danger">Delete</a>
+                        <a class="btn btn-danger" @onclick="@(() => DeleteEmployee(employee.EmployeeId))">Delete</a>
 
                     </td>
 
@@ -78,5 +78,11 @@ else
                 ExpiryDate = "07/04/1993"
             }
         };*@
+    }
+
+    async Task DeleteEmployee(int employeeId)
+    {
+        await http.DeleteAsync($"api/employees/{employeeId}");
+        await GetAllEmployees();
     }
 }
