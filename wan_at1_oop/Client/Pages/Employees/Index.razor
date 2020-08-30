@@ -3,7 +3,7 @@
 
 
     <div class="container">
-        <button type="button"class="btn btn-outline-primary mb-2" style="width:100%;" @onclick="@setToCreateForm"> Create + </button>
+        <button type="button"class="btn btn-outline-primary mb-2" style="width:100%;" @onclick="@setToCreateForm"> Display Create Form + </button>
 
         <div class="row">
             <div class="col-4">
@@ -11,6 +11,7 @@
                               Employee="@employee"
                               OnValidSubmit="@ChooseSubmitActionAndSubmit"
                               Title="@title"
+                              isEdit="@isEdit"
                               />
             </div>
             <div class="col-8" style="border-left: 1px solid grey;">
@@ -96,16 +97,16 @@
     //form configuration
     string title = "Create";
     string buttonText = "Create!";
-    string action = "create";
+    Boolean isEdit = false;
 
     //function determine submit action
     async Task ChooseSubmitActionAndSubmit()
     {
-        if(action == "create")
+        if(!isEdit)
         {
             await CreateEmployee();
         }
-        if(action == "edit")
+        if(isEdit)
         {
             await UpdateEmployee();
         }
@@ -116,7 +117,7 @@
     async Task GetEmployeeDetails(int employeeId)
     {
         employee = await http.GetFromJsonAsync<Technician>($"api/employees/{employeeId}");
-        action = "edit";
+        isEdit = true;
         title = "Edit";
         buttonText = "Edit " + employee.EmployeeName;
     }
@@ -142,7 +143,7 @@
     {
         title = "Create";
         buttonText = "Create!";
-        action = "create";
+        isEdit = false;
         employee = new Technician();
         employee.BranchId = 1;
         employee.PositionId = 1;
