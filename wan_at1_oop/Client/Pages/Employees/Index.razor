@@ -82,6 +82,8 @@
     protected override async Task OnInitializedAsync()
     {
         await GetAllEmployees();
+        employee.BranchId = 1;
+        employee.PositionId = 1;
     }
 
     async Task GetAllEmployees()

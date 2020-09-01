@@ -13,6 +13,9 @@
                                    class="form-control"
                                    placeholder="e.g. John" />
                     </label>
+                    <span class="errorMsg">
+                        <ValidationMessage For="@(() => Employee.EmployeeName)" />
+                    </span>
                 </div>
             </div>
         </div>
@@ -33,11 +36,9 @@
                                 <option value="@branch.BranchId">@branch.Location</option>
                             }
                         }
-
-                        @*<option value="1">NSW</option>
-                        <option value="2">VIC</option>*@
                     </CustomInputSelect>
                 </label>
+                <ValidationMessage For="@(() => Employee.BranchId)" />
             </div>
             <div class="col-4">
                 <label>
@@ -46,6 +47,7 @@
                                  class="form-control"
                                  placeholder="e.g. 12.99" />
                 </label>
+                <ValidationMessage For="@(() => Employee.RatePerHour)" />
             </div>
         </div>
 
@@ -66,11 +68,9 @@
                                 <option value="@position.PositionId" @onclick="@changeDefaultValue">@position.PositionType</option>
                             }
                         }
-
-                        @*<option value="1" @onclick="@changeDefaultValue">Technician</option>
-                        <option value="2" @onclick="@changeDefaultValue">Accountant</option>*@
                     </CustomInputSelect>
                 </label>
+                <ValidationMessage For="@(() => Employee.PositionId)" />
             </div>
         </div>
 
@@ -82,15 +82,16 @@
                                class="form-control"
                                placeholder="e.g. 000001" />
                 </label>
+                <ValidationMessage For="@(() => Employee.Registration)" />
             </div>
             <div class="col-5">
                 <label>
                     Expiry Date:
                     <InputText @bind-Value="@Employee.ExpiryDate"
                                class="form-control"
-                               placeholder="dd/mm/yyyy"
-                               />
+                               placeholder="dd/mm/yyyy" />
                 </label>
+                <ValidationMessage For="@(() => Employee.ExpiryDate)" />
             </div>
         </div>
         <button type="submit" class="btn btn-success mt-2 d-block" style="width: 100%;">
