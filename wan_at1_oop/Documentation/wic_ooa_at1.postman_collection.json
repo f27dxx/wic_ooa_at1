@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "cd9c71c2-c764-4a83-9172-ad035a074b07",
+		"name": "wic_ooa_at1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:5001/api/employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0471cb8-02c3-41dd-8ef0-6e82b0c6d953",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"registration\": \"351115\",\n    \"expiryDate\": \"31/01/2024\",\n    \"employeeId\": 99,\n    \"employeeName\": \"Trazzie\",\n    \"ratePerHour\": 18.49,\n    \"positionId\": 1,\n    \"branchId\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/employees",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/api/employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0471cb8-02c3-41dd-8ef0-6e82b0c6d953",
+						"exec": [
+							"pm.test(\"Successful Put request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"registration\":\"361151\",\"expiryDate\":\"31/01/2024\",\"employeeId\":99,\"employeeName\":\"Fred\",\"ratePerHour\":24.49,\"positionId\":1,\"branchId\":3,\"branch\":null,\"position\":null}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/employees/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/api/employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0471cb8-02c3-41dd-8ef0-6e82b0c6d953",
+						"exec": [
+							"pm.test(\"Successful Delete request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/employees/99",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"employees",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:5001/api/employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0471cb8-02c3-41dd-8ef0-6e82b0c6d953",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/employees/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
