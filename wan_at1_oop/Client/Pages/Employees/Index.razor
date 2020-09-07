@@ -29,7 +29,7 @@
                                 </button>
                                 <button class="btn btn-primary btn-sm" type="button"
                                         @onclick="@(() => GetAllEmployees())">
-                                    Refresh
+                                    Refresh List
                                 </button>
                             </form>
                         </div>
@@ -103,9 +103,7 @@
 @code {
     // table part
     Technician employee = new Technician();
-
     Technician[] employees { get; set; }
-
     string searchInput;
 
     protected override async Task OnInitializedAsync()
@@ -117,7 +115,6 @@
 
     async Task GetAllEmployees()
     {
-        @*employees = new Technician[] { };*@
         employees = await http.GetFromJsonAsync<Technician[]>("api/employees");
     }
 
@@ -181,9 +178,12 @@
         employee.PositionId = 1;
     }
 
+    //searh input
     async Task searchEmployeeByName(string employeeName)
     {
-        employees = await http.GetFromJsonAsync<Technician[]>($"api/employees/search/{employeeName}");
-
+        if (!String.IsNullOrEmpty(employeeName))
+        {
+            employees = await http.GetFromJsonAsync<Technician[]>($"api/employees/search/{employeeName}");
+        }
     }
 }
