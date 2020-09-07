@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,12 @@ namespace wan_at1_oop.Server.Controllers
         public async Task<ActionResult<Technician>> GetEmployee(int id)
         {
             return await context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == id);
+        }
+
+        [HttpGet("search/{search}")]
+        public async Task<ActionResult<List<Technician>>> GetEmployeeByName(string search)
+        {
+            return await context.Employees.Where(e => e.EmployeeName.Contains(search)).ToListAsync();
         }
 
         [HttpPost]
