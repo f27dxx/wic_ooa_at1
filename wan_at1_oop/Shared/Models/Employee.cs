@@ -37,7 +37,7 @@ namespace wan_at1_oop.Shared.Models
         public Branch Branch { get; set; }
         public Position Position { get; set; }
 
-        static double CalculateWage(double rate, double hour)
+        public double CalculateWage(double rate, double hour)
         {
             return rate * hour;
         }

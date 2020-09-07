@@ -1,0 +1,58 @@
+﻿@page "/wage"
+@inject HttpClient http
+
+<h3>Calculate Wage</h3>
+@if (employees == null)
+{
+    <h6>Loading</h6>
+}
+else
+{
+<form>
+    <select @bind="@rate">
+        @foreach (var employee in employees)
+        {
+            <option value="@employee.RatePerHour"> @employee.EmployeeId</option>
+        }
+    </select>
+    <input type="number" @bind-value="@hours"/>
+    <button class="btn btn-primary" type="button" @onclick="@(() => CalculateRate(rate, hours))">Calculate</button>
+</form>
+}
+@if(grossIncome != 0)
+{
+    <p>Gross Income = @grossIncome</p>
+    <p>Tax Payable = @tax</p>
+    <p>Net Income = @netIncome</p>
+}
+
+@code {
+    Technician[] employees { get; set; }
+    double rate;
+    double hours;
+    double grossIncome = 0;
+    double netIncome;
+    double tax;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllEmployees();
+    }
+
+    async Task GetAllEmployees()
+    {
+        employees = await http.GetFromJsonAsync<Technician[]>("api/employees");
+    }
+
+    public void CalculateRate(double rate, double hours)
+    {
+        var instance = new Employee();
+        if(hours < 0)
+        {
+            hours = -hours;
+        }
+        grossIncome = instance.CalculateWage(rate, hours);
+        tax = grossIncome * .192;
+        netIncome = grossIncome - tax;
+    }
+}
